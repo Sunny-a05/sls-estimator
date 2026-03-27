@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-black font-sans;
+    font-feature-settings: "ss01", "ss02", "cv01";
+  }
+
+  /* ── Premium selection styling ── */
+  ::selection {
+    @apply bg-red/[0.12] text-black;
+  }
+
+  /* ── Scrollbar (osmo.supply minimal) ── */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-border rounded-sm;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-muted;
+  }
+}
+
+@layer components {
+  /* ── Focus ring (accessibility) — single source of truth ── */
+  .focus-ring {
+    @apply outline-none ring-2 ring-red/30 ring-offset-2 ring-offset-white;
+  }
+
+  /* ── Staggered entrance delays for Framer Motion children ── */
+  .stagger-children > * {
+    --stagger-delay: 0ms;
+  }
+  .stagger-children > *:nth-child(1) { --stagger-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { --stagger-delay: 60ms; }
+  .stagger-children > *:nth-child(3) { --stagger-delay: 120ms; }
+  .stagger-children > *:nth-child(4) { --stagger-delay: 180ms; }
+  .stagger-children > *:nth-child(5) { --stagger-delay: 240ms; }
+  .stagger-children > *:nth-child(6) { --stagger-delay: 300ms; }
+}
+
+@layer utilities {
+  /* ── Glass morphism panel ── */
+  .glass {
+    @apply bg-white/[0.72] border border-gray-border/50;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* ── Text gradient (for headings) ── */
+  .text-gradient {
+    background: linear-gradient(135deg, theme('colors.black.DEFAULT') 0%, theme('colors.gray.DEFAULT') 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
