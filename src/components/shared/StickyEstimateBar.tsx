@@ -1,13 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface StickyEstimateBarProps {
   cost: string;
   time: string;
   builds: number;
   qty: number;
-  onRequestQuote: () => void;
+  quoteHref: string;
 }
 
 export function StickyEstimateBar({
@@ -15,7 +16,7 @@ export function StickyEstimateBar({
   time,
   builds,
   qty,
-  onRequestQuote,
+  quoteHref,
 }: StickyEstimateBarProps) {
   return (
     <motion.div
@@ -56,18 +57,19 @@ export function StickyEstimateBar({
           </div>
 
           {/* CTA */}
-          <button
-            onClick={onRequestQuote}
+          <Link
+            href={quoteHref}
             className="
               flex-shrink-0 px-5 py-2.5 rounded-xl
               text-caption font-bold bg-red text-white
               hover:bg-red-dark active:scale-[0.97]
               transition-all duration-200
               shadow-btn hover:shadow-btn-hover
+              inline-block
             "
           >
             Request Quote
-          </button>
+          </Link>
         </div>
       </div>
     </motion.div>

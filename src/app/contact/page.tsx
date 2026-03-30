@@ -34,6 +34,7 @@ export default function ContactPage() {
   const store = useWizardStore();
   const viewer = useViewerStore();
   const hasJobData = store.x > 0 && store.y > 0 && store.z > 0;
+  const hasQuote = !!store.estimatedCost;
 
   const [form, setForm] = useState<ContactFormData>({
     first_name: "",
@@ -70,6 +71,9 @@ export default function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
+          estimated_cost: store.estimatedCost || "",
+          estimated_time: store.estimatedTime || "",
+          estimated_builds: store.estimatedBuilds || 0,
           issue_types: [],
         }),
       });
@@ -206,6 +210,16 @@ export default function ContactPage() {
                     <h3 className="text-micro uppercase tracking-widest text-gray-muted font-bold mb-3">
                       Attached Job Data
                     </h3>
+                    {hasQuote && (
+                      <div className="mb-3 pb-3 border-b border-gray-border/30 grid grid-cols-2 gap-x-6 gap-y-1.5 text-caption">
+                        <span className="text-gray">Estimated Cost</span>
+                        <span className="font-bold text-red">{store.estimatedCost}</span>
+                        <span className="text-gray">Estimated Time</span>
+                        <span className="font-semibold text-black">{store.estimatedTime}</span>
+                        <span className="text-gray">Builds</span>
+                        <span className="font-semibold text-black">{store.estimatedBuilds}</span>
+                      </div>
+                    )}
                     <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-caption">
                       <span className="text-gray">Dimensions</span>
                       <span className="font-semibold text-black">{form.dimensions}</span>

@@ -20,6 +20,10 @@ interface WizardStoreState {
   fittingPrinters: FittingPrinter[];
   selectedPrinter: FittingPrinter | null;
   materialMatch: Material | null;
+  // Persisted quote result for the contact page
+  estimatedCost: string;
+  estimatedTime: string;
+  estimatedBuilds: number;
 
   setStep: (step: WizardStep) => void;
   setBranch: (branch: BranchMode) => void;
@@ -28,6 +32,7 @@ interface WizardStoreState {
   setFittingPrinters: (printers: FittingPrinter[]) => void;
   setSelectedPrinter: (printer: FittingPrinter | null) => void;
   setMaterialMatch: (material: Material | null) => void;
+  setQuoteResult: (cost: string, time: string, builds: number) => void;
   reset: () => void;
 }
 
@@ -47,6 +52,9 @@ const initialState = {
   fittingPrinters: [] as FittingPrinter[],
   selectedPrinter: null as FittingPrinter | null,
   materialMatch: null as Material | null,
+  estimatedCost: "",
+  estimatedTime: "",
+  estimatedBuilds: 0,
 };
 
 export const useWizardStore = create<WizardStoreState>()(
@@ -70,6 +78,7 @@ export const useWizardStore = create<WizardStoreState>()(
       setFittingPrinters: (printers) => set({ fittingPrinters: printers }),
       setSelectedPrinter: (printer) => set({ selectedPrinter: printer }),
       setMaterialMatch: (material) => set({ materialMatch: material }),
+      setQuoteResult: (cost, time, builds) => set({ estimatedCost: cost, estimatedTime: time, estimatedBuilds: builds }),
       reset: () => set(initialState),
     }),
     {
@@ -93,6 +102,9 @@ export const useWizardStore = create<WizardStoreState>()(
         y: state.y,
         z: state.z,
         vol: state.vol,
+        estimatedCost: state.estimatedCost,
+        estimatedTime: state.estimatedTime,
+        estimatedBuilds: state.estimatedBuilds,
       }),
     }
   )

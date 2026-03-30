@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { fadeUp, stagger } from "@/lib/motion";
 import { CostBreakdownCard } from "@/components/shared/CostBreakdownCard";
 import { TimeBreakdownCard } from "@/components/shared/TimeBreakdownCard";
@@ -248,12 +249,12 @@ export function Step5Results({
             >
               New Estimate
             </button>
-            <button
-              onClick={() => setShowModal(true)}
-              className="px-6 py-2.5 rounded-xl text-caption font-bold bg-red text-white hover:bg-red-dark active:scale-[0.97] transition-all duration-300 ease-smooth shadow-btn"
+            <Link
+              href="/contact"
+              className="px-6 py-2.5 rounded-xl text-caption font-bold bg-red text-white hover:bg-red-dark active:scale-[0.97] transition-all duration-300 ease-smooth shadow-btn inline-block"
             >
               Request Quote
-            </button>
+            </Link>
           </div>
         </motion.div>
       </motion.div>

@@ -12,6 +12,7 @@ import { computeOptimalBatches } from "@/lib/engine/batch-calculator";
 import { PRINTER_MAP, DEFAULT_PRINTER } from "@/config/printers";
 import { FUSE1_CONFIG } from "@/lib/engine/config";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { DropZone } from "@/components/shared/DropZone";
 
 // Code-split Three.js — only loads when the viewer is actually needed
@@ -118,6 +119,17 @@ export function ConfiguratorShell() {
     return h > 0 ? `${h}h ${m}m` : `${m}m`;
   };
   const fmtTHB = (v: number) => `฿${v.toLocaleString()}`;
+
+  // Persist quote result to store so the /contact page can display it
+  useEffect(() => {
+    if (result) {
+      store.setQuoteResult(
+        fmtTHB(result.finalQuote),
+        fmtTime(result.totalMinAll),
+        result.builds
+      );
+    }
+  }, [result?.finalQuote, result?.totalMinAll, result?.builds]);
 
   const volDisplay = effectiveVol > 0
     ? effectiveVol > 1e6 ? `${(effectiveVol / 1e6).toFixed(2)} cm³` : `${effectiveVol.toFixed(1)} mm³`
@@ -523,12 +535,12 @@ export function ConfiguratorShell() {
                 New Configuration
               </button>
               {result && (
-                <button
-                  onClick={() => setShowSummary(true)}
-                  className="px-6 py-2.5 rounded-xl text-caption font-bold bg-red text-white hover:bg-red-dark active:scale-[0.97] transition-all duration-300 shadow-btn"
+                <Link
+                  href="/contact"
+                  className="px-6 py-2.5 rounded-xl text-caption font-bold bg-red text-white hover:bg-red-dark active:scale-[0.97] transition-all duration-300 shadow-btn inline-block"
                 >
                   Request Quote
-                </button>
+                </Link>
               )}
             </div>
           </motion.div>
@@ -543,7 +555,7 @@ export function ConfiguratorShell() {
             time={fmtTime(result.totalMinAll)}
             builds={result.builds}
             qty={store.qty}
-            onRequestQuote={() => setShowSummary(true)}
+            quoteHref="/contact"
           />
         )}
       </AnimatePresence>
