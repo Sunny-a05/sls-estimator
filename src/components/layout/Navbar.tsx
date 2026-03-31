@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ease } from "@/lib/motion";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const NAV_LINKS = [
   { href: "/configure", label: "Configure" },
@@ -149,6 +150,15 @@ export function Navbar() {
               </motion.div>
             ))}
 
+            <motion.div
+              initial={{ opacity: 0, filter: "blur(4px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="px-2 border-l border-gray-border/50 ml-1"
+            >
+              <LanguageSwitcher />
+            </motion.div>
+
             {/* CTA — hidden when already on wizard */}
             {!isOnWizard && (
               <motion.div
@@ -234,6 +244,10 @@ export function Navbar() {
                   Start Job
                 </Link>
               )}
+
+              <div className="pt-4 mt-2 border-t border-gray-border/50 flex justify-center">
+                <LanguageSwitcher />
+              </div>
             </div>
           </motion.div>
         )}
